@@ -1,7 +1,7 @@
 # 🐳 Three-Tier Architecture with Docker Compose
 
 
-A production-ready containerized three-tier web application using **Docker Compose** with private network segmentation, health checks, and automatic restart policies.
+Containerized three-tier web application using **Docker Compose** with private network segmentation, health checks and automatic restart policies.
 
 ---
 
