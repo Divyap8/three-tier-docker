@@ -238,32 +238,5 @@ Smaller attack surface, faster pulls, less disk usage. `nginx:1.25-alpine` is ~2
 
 ---
 
-## 🔧 Extending the Stack
-
-### Add Redis cache tier
-```yaml
-redis:
-  image: redis:7-alpine
-  restart: unless-stopped
-  networks:
-    - backend_net
-  healthcheck:
-    test: ["CMD", "redis-cli", "ping"]
-    interval: 30s
-    timeout: 10s
-    retries: 3
-```
-
-### Enable HTTPS with Let's Encrypt
-Replace the Nginx service with `nginx-proxy` + `acme-companion`:
-```yaml
-services:
-  nginx-proxy:
-    image: nginxproxy/nginx-proxy
-  acme:
-    image: nginxproxy/acme-companion
-```
-
----
 
 
