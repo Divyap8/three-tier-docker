@@ -175,17 +175,6 @@ MySQL (healthy) → PHP-FPM (healthy) → Nginx starts
 
 ---
 
-## 🔒 Security Highlights
-
-- **MySQL not exposed to host** — port 3306 is only reachable via the private `db_net` network
-- **PHP runs as non-root** (`appuser:appgroup`, UID 1000)
-- **`server_tokens off`** in Nginx — hides version from response headers
-- **`expose_php = Off`** — hides PHP version from HTTP headers
-- **`local_infile = 0`** in MySQL — prevents LOAD DATA LOCAL INFILE attacks
-- **`disable_functions`** in PHP blocks shell execution functions
-- Hardened security headers: `X-Frame-Options`, `X-Content-Type-Options`, `X-XSS-Protection`
-
----
 
 ## ⚙️ Configuration Reference
 
@@ -210,33 +199,7 @@ MySQL (healthy) → PHP-FPM (healthy) → Nginx starts
 
 ---
 
-## 🧩 Key Design Decisions
 
-### Why three separate Docker networks?
-
-Least-privilege network segmentation: the database is completely unreachable from the internet even if Nginx is compromised. An attacker breaching the web tier cannot directly query MySQL.
-
-### Why `depends_on` with `condition: service_healthy`?
-
-Prevents race conditions where PHP tries to connect to MySQL before it's ready to accept connections, or Nginx tries to proxy to PHP before FPM has started.
-
-### Why Alpine base images?
-
-Smaller attack surface, faster pulls, less disk usage. `nginx:1.25-alpine` is ~23MB vs ~140MB for the Debian variant.
-
----
-
-## 📊 Performance Comparison
-
-| Metric              | Before Docker | After Docker Compose |
-|---------------------|---------------|----------------------|
-| Environment setup   | ~2 hours      | **~5 minutes**       |
-| Config drift risk   | High          | **None** (IaC)       |
-| Onboarding new devs | Manual guide  | `bash deploy.sh`     |
-| Failure recovery    | Manual        | **Automatic**        |
-| Environment parity  | Often broken  | **Guaranteed**       |
-
----
 
 
 
