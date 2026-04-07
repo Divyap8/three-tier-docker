@@ -8,6 +8,7 @@ LABEL description="PHP-FPM Application Tier — Three-Tier Docker Architecture"
 RUN apk add --no-cache \
     bash \
     curl \
+    netcat-openbsd \
     libpng-dev \
     libjpeg-turbo-dev \
     freetype-dev \
