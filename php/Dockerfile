@@ -50,6 +50,6 @@ USER appuser
 # ── Copy application source ───────────────────────────────────
 COPY --chown=appuser:appgroup src/ .
 
-EXPOSE 3000
+EXPOSE 9000
 
 CMD ["php-fpm"]
